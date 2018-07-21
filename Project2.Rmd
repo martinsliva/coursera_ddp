@@ -1,0 +1,73 @@
+---
+title: "## R Markdown Presentation & Plotly"
+subtitile: "Coursera Developing Data Products"
+author: "Martin Sliva"
+date: "2018 July 21"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Global Peace Index
+
+The Global Peace Index analyses the state of peace around the world as an attempt to measure the relative position of nations peacefulness. It was launched in 2007 and updated yearly. It's elaborated by the Institute for Economics and Peace.
+
+Lower values means more peaceful country.
+
+The first chart shows summary per continent as a box chart.
+
+The second chart shows scatter chart - value of index against world ranking.
+
+
+## Code
+
+```{r echo = TRUE, eval=FALSE}
+library(plotly)
+index <- read.csv("Global Peace Index.csv") ## Reading dataset
+plot_ly(data = index,  
+        x= ~Index, 
+        type = "box", 
+        color =  ~Continent) # Box plot
+plot_ly(data = index,  
+        y= ~Index, 
+        x= ~Ranking, 
+        color = ~Continent, 
+        type= "scatter", 
+        mode="markers",  
+        hoverinfo = 'text',
+            text = ~paste('Country: ', Country,
+            '</br></br> Index: ', Index,
+            '</br> Ranking: ', Ranking)) ##Scater plot
+```
+
+
+
+## Box Chart 
+
+```{r  echo = FALSE, warning=FALSE, message=FALSE}
+library(plotly)
+
+index <- read.csv("Global Peace Index.csv")
+
+plot_ly(data = index,  x= ~Index, type = "box", color =  ~Continent)
+
+
+```
+
+## Scatter Chart
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+
+plot_ly(data = index,  y= ~Index, x= ~Ranking, color = ~Continent, type= "scatter",mode="markers",  hoverinfo = 'text',
+text = ~paste('Country: ', Country,
+'</br></br> Index: ', Index,
+'</br> Ranking: ', Ranking))
+
+
+```
+
+
+## Credits
+
+Data was downloaded from https://countryeconomy.com/demography/global-peace-index
